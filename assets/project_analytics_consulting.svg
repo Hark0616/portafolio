@@ -1,0 +1,48 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" fill="#050505"/>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1200" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00D4FF" stop-opacity="0.28"/>
+      <stop offset="0.55" stop-color="#00D4FF" stop-opacity="0.04"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0 0 0 0 0 0.831 0 0 0 0 1 0 0 0 0.55 0"/>
+      <feBlend in="SourceGraphic" mode="screen"/>
+    </filter>
+  </defs>
+  <rect x="80" y="70" width="1040" height="580" rx="32" fill="url(#g)" stroke="#27333A"/>
+  <g opacity="0.28">
+    <path d="M120 170H1080" stroke="#6F7D85" stroke-width="1"/>
+    <path d="M120 270H1080" stroke="#6F7D85" stroke-width="1"/>
+    <path d="M120 370H1080" stroke="#6F7D85" stroke-width="1"/>
+    <path d="M120 470H1080" stroke="#6F7D85" stroke-width="1"/>
+    <path d="M120 570H1080" stroke="#6F7D85" stroke-width="1"/>
+    <path d="M260 100V620" stroke="#6F7D85" stroke-width="1"/>
+    <path d="M460 100V620" stroke="#6F7D85" stroke-width="1"/>
+    <path d="M660 100V620" stroke="#6F7D85" stroke-width="1"/>
+    <path d="M860 100V620" stroke="#6F7D85" stroke-width="1"/>
+  </g>
+  <g filter="url(#glow)">
+    <path d="M180 530C265 455 330 505 410 415C490 325 555 370 630 290C700 214 760 230 838 160C910 95 985 132 1040 95" stroke="#00D4FF" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="180" cy="530" r="12" fill="#00D4FF"/>
+    <circle cx="410" cy="415" r="12" fill="#00D4FF"/>
+    <circle cx="630" cy="290" r="12" fill="#00D4FF"/>
+    <circle cx="838" cy="160" r="12" fill="#00D4FF"/>
+    <circle cx="1040" cy="95" r="12" fill="#00D4FF"/>
+  </g>
+  <g>
+    <rect x="160" y="135" width="245" height="92" rx="18" fill="#0E1416" stroke="#00D4FF" stroke-opacity="0.35"/>
+    <text x="190" y="172" fill="#00D4FF" font-family="Inter, Arial" font-size="22" font-weight="700">DIAGNOSTICO</text>
+    <text x="190" y="202" fill="#9AA5AA" font-family="JetBrains Mono, monospace" font-size="15">fuentes - calidad - roadmap</text>
+    <rect x="475" y="458" width="245" height="92" rx="18" fill="#0E1416" stroke="#00D4FF" stroke-opacity="0.35"/>
+    <text x="505" y="495" fill="#00D4FF" font-family="Inter, Arial" font-size="22" font-weight="700">ETL / ELT</text>
+    <text x="505" y="525" fill="#9AA5AA" font-family="JetBrains Mono, monospace" font-size="15">automatizacion - SQL - APIs</text>
+    <rect x="780" y="390" width="260" height="92" rx="18" fill="#0E1416" stroke="#00D4FF" stroke-opacity="0.35"/>
+    <text x="810" y="427" fill="#00D4FF" font-family="Inter, Arial" font-size="22" font-weight="700">DASHBOARDS</text>
+    <text x="810" y="457" fill="#9AA5AA" font-family="JetBrains Mono, monospace" font-size="15">BI - KPIs - alertas</text>
+  </g>
+  <text x="120" y="640" fill="#EDEDED" font-family="Inter, Arial" font-size="34" font-weight="300">Data Analytics Starter Pack</text>
+  <text x="120" y="674" fill="#00D4FF" font-family="JetBrains Mono, monospace" font-size="16" letter-spacing="3">EXCEL -> PIPELINE -> DASHBOARD -> IA</text>
+</svg>
