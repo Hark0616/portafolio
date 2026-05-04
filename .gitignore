@@ -1,0 +1,10 @@
+# Supabase credentials — NEVER commit this with real keys
+supabase-config.js
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.code-workspace
