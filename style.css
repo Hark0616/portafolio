@@ -6,11 +6,11 @@
   --bg-surface: #111111;
   --bg-card: #161616;
   --bg-card-hover: #1c1c1c;
-  --border: #222222;
-  --border-hover: #444444;
+  --border: #333333;
+  --border-hover: #555555;
   --text-primary: #f0f0f0;
-  --text-secondary: #999999;
-  --text-muted: #666666;
+  --text-secondary: #aaaaaa;
+  --text-muted: #777777;
   --accent: #5eead4;
   --accent-dim: rgba(94, 234, 212, 0.08);
   --accent-hover: #2dd4bf;
@@ -493,8 +493,8 @@ body.light-mode .hero-overlay {
   transition: border-color 0.3s;
 }
 .form-input:focus { border-color: var(--accent); }
-.form-input::placeholder { color: var(--text-muted); }
-.form-textarea { resize: vertical; min-height: 90px; }
+.form-input::placeholder { color: var(--text-muted); opacity: 1; }
+.form-textarea { resize: vertical; min-height: 90px; border-bottom: 1px solid var(--border); }
 .form-submit-row { display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start; margin-top: 0.4rem; }
 .form-note { font-family: var(--font-mono); font-size: var(--ts-tag); color: var(--text-muted); }
 .form-success { display: flex; align-items: center; gap: 0.8rem; padding: 1rem 1.2rem; border: 1px solid var(--accent); border-radius: var(--radius); }
