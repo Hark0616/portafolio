@@ -456,73 +456,24 @@
   </section>
 
 
+
   <!-- ============================================================
        CONTACTO
   ============================================================ -->
   <section id="contacto">
     <div class="container">
-      <div class="contact-inner">
-
-        <div class="contact-header anim-fade-up">
-          <p class="section-tag">/ HABLEMOS</p>
-          <h2 class="section-title">¿Cuál es el problema<br />que no lo deja avanzar?</h2>
-          <p class="contact-sub">Cuéntenos el cuello de botella. Nosotros averiguamos el resto en la llamada.</p>
-        </div>
-
-        <form id="contact-form" name="evaluacion-tecnica" class="contact-form anim-fade-up" method="POST"
-          data-netlify="true" netlify-honeypot="bot-field" novalidate>
-          <input type="hidden" name="form-name" value="evaluacion-tecnica" />
-          <p class="hidden">
-            <label>No llenar este campo: <input name="bot-field" /></label>
-          </p>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="inp-nombre">Nombre *</label>
-              <input class="form-input" type="text" id="inp-nombre" name="nombre" required autocomplete="name" />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="inp-empresa">Empresa *</label>
-              <input class="form-input" type="text" id="inp-empresa" name="empresa" required autocomplete="organization" />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="inp-email">Correo electrónico *</label>
-            <input class="form-input" type="email" id="inp-email" name="email" required autocomplete="email" />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="inp-problema">¿Cuál es el cuello de botella técnico que no lo deja avanzar? *</label>
-            <textarea class="form-input form-textarea" id="inp-problema" name="problema" rows="5"
-              placeholder="Ej: El sistema de producción no habla con el inventario. Los reportes los arman a mano en Excel. Los sensores mandan datos pero nadie los lee..."
-              required></textarea>
-          </div>
-
-          <div class="form-submit-row">
-            <button type="submit" class="btn-primary" id="btn-submit">
-              Enviar
-              <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </button>
-            <p class="form-note">Respuesta en 24–48h. Sin spam, sin CRM, sin vendedores.</p>
-          </div>
-
-          <div id="form-success" class="form-success hidden" role="status" aria-live="polite">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <p>Mensaje recibido. <span class="accent">Hablamos pronto.</span></p>
-          </div>
-
-          <div id="form-error" class="form-error hidden" role="alert" aria-live="assertive">
-            <p>No se pudo enviar. Se abrirá su cliente de correo con el mensaje listo.</p>
-          </div>
-
-        </form>
-
+      <div class="contact-simple anim-fade-up">
+        <p class="section-tag">/ HABLEMOS</p>
+        <h2 class="section-title">¿Tiene un problema tecnico<br />que no ha podido resolver?</h2>
+        <p class="contact-sub">Escribanos directamente. Sin formularios, sin esperas.</p>
+        <a href="mailto:reset.dev.solutions@gmail.com?subject=Consulta%20tecnica&body=Hola%20ResetDev%2C%0A%0AEl%20problema%20que%20tenemos%20es%3A%0A"
+           class="btn-primary btn-contact" id="btn-contacto">
+          Contactanos
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+        <p class="form-note">reset.dev.solutions@gmail.com</p>
       </div>
     </div>
   </section>
