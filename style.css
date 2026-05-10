@@ -5,6 +5,15 @@
 
 :root {
   /* Palette */
+  --bg-void: #ececec;
+  --bg-surface: #f6f6f6;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f2f2f2;
+  --titanium: #4f4f4f;
+  --titanium-dim: #c8c8c8;
+  --text-primary: #111111;
+  --text-secondary: #2a2a2a;
+  --text-muted: #5f5f5f;
   --bg-void: #000000;
   --bg-surface: #0a0a0a;
   --bg-card: #111111;
@@ -65,6 +74,17 @@ body {
 }
 
 body.light-mode {
+  --bg-void: #0b0b0b;
+  --bg-surface: #111111;
+  --bg-card: #161616;
+  --bg-card-hover: #1d1d1d;
+  --titanium: #b5b5b5;
+  --titanium-dim: #3d3d3d;
+  --text-primary: #f0f0f0;
+  --text-secondary: #c8c8c8;
+  --text-muted: #9f9f9f;
+  --accent: #f0f0f0;
+  --accent-dim: rgba(255, 255, 255, 0.08);
   --bg-void: #ebebeb;
   --bg-surface: #f5f5f5;
   --bg-card: #e0e0e0;
@@ -79,11 +99,11 @@ body.light-mode {
 }
 
 body.light-mode .hero-overlay {
-  background: linear-gradient(135deg, rgba(235,235,235,0.9) 0%, rgba(235,235,235,0.7) 100%);
+  background: linear-gradient(135deg, rgba(11,11,11,0.82) 0%, rgba(11,11,11,0.64) 100%);
 }
 
 body.light-mode .hero-bg {
-  filter: grayscale(100%) contrast(0.6) brightness(1.1) blur(2px);
+  filter: grayscale(100%) contrast(0.65) brightness(0.75) blur(2px);
 }
 
 body.light-mode .hero-headline,
@@ -107,7 +127,7 @@ body.light-mode .hero-sub {
   height: 10px;
   background: var(--accent);
   border-radius: 50%;
-  box-shadow: 0 0 10px var(--accent-glow);
+  box-shadow: none;
 }
 
 a {
@@ -244,7 +264,7 @@ input {
 }
 
 .btn-primary:hover::before { transform: translateX(0); }
-.btn-primary:hover { color: var(--bg-void); box-shadow: 0 0 28px var(--accent-glow); }
+.btn-primary:hover { color: var(--bg-void); box-shadow: none; }
 .btn-primary > * { position: relative; z-index: 1; }
 
 .btn-arrow { width: 1em; height: 1em; transition: transform 0.3s; }
@@ -544,3 +564,5 @@ body.light-mode #main-nav.scrolled {
 .nav-logo .logo-mini { display: none; font-family: var(--font-mono); letter-spacing: 0.08em; }
 #main-nav.scrolled .nav-logo .logo-primary { display: none; }
 #main-nav.scrolled .nav-logo .logo-mini { display: inline; }
+
+.nav-logo .logo-primary { font-family: var(--font-sans); font-weight: 600; letter-spacing: -0.02em; }
