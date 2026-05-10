@@ -465,15 +465,42 @@
       <div class="contact-simple anim-fade-up">
         <p class="section-tag">/ HABLEMOS</p>
         <h2 class="section-title">¿Tiene un problema tecnico<br />que no ha podido resolver?</h2>
-        <p class="contact-sub">Escribanos directamente. Sin formularios, sin esperas.</p>
-        <a href="mailto:reset.dev.solutions@gmail.com?subject=Consulta%20tecnica&body=Hola%20ResetDev%2C%0A%0AEl%20problema%20que%20tenemos%20es%3A%0A"
-           class="btn-primary btn-contact" id="btn-contacto">
-          Contactanos
-          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </a>
-        <p class="form-note">reset.dev.solutions@gmail.com</p>
+        <p class="contact-sub">Cuentenos el problema. Respondemos en menos de 48 horas.</p>
+
+        <form action="https://formsubmit.co/reset.dev.solutions@gmail.com" method="POST" class="contact-form" id="contact-form">
+          <input type="hidden" name="_subject" value="Nueva consulta - ResetDev" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="text" name="_honey" style="display:none" />
+
+          <div class="form-group">
+            <label class="form-label" for="inp-nombre">Nombre</label>
+            <input class="form-input" type="text" id="inp-nombre" name="nombre" required autocomplete="name" placeholder="Su nombre" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inp-email">Correo electronico</label>
+            <input class="form-input" type="email" id="inp-email" name="email" required autocomplete="email" placeholder="su@correo.com" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inp-mensaje">El problema</label>
+            <textarea class="form-input form-textarea" id="inp-mensaje" name="mensaje" rows="4"
+              placeholder="Describanos el cuello de botella o el sistema que no funciona como deberia..."
+              required></textarea>
+          </div>
+
+          <div class="form-submit-row">
+            <button type="submit" class="btn-primary" id="btn-submit">
+              Enviar mensaje
+              <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </button>
+            <p class="form-note">Sin spam. Solo respondemos si podemos ayudar.</p>
+          </div>
+        </form>
+
       </div>
     </div>
   </section>

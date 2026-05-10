@@ -482,6 +482,20 @@ body.light-mode .hero-overlay {
 }
 .contact-sub { font-size: var(--ts-small); color: var(--text-muted); max-width: 380px; }
 .btn-contact { align-self: flex-start; }
+.contact-form { display: flex; flex-direction: column; gap: 1.2rem; width: 100%; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-label { font-family: var(--font-mono); font-size: var(--ts-tag); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.form-input {
+  background: transparent; border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary); padding: 0.6rem 0;
+  outline: none; width: 100%; font-size: var(--ts-small);
+  transition: border-color 0.3s;
+}
+.form-input:focus { border-color: var(--accent); }
+.form-input::placeholder { color: var(--text-muted); }
+.form-textarea { resize: vertical; min-height: 90px; }
+.form-submit-row { display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start; margin-top: 0.4rem; }
 .form-note { font-family: var(--font-mono); font-size: var(--ts-tag); color: var(--text-muted); }
 .form-success { display: flex; align-items: center; gap: 0.8rem; padding: 1rem 1.2rem; border: 1px solid var(--accent); border-radius: var(--radius); }
 .form-success svg { width: 1.4rem; height: 1.4rem; color: var(--accent); flex: 0 0 auto; }
