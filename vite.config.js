@@ -1,6 +1,16 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  plugins: [{
+    name: 'html-minify',
+    transformIndexHtml(html) {
+      return html
+        .replace(/<!--[\s\S]*?-->/g, '') // remove comments
+        .replace(/\s+/g, ' ')            // collapse whitespace
+        .trim();
+    }
+  }],
+
   // La raíz del proyecto es la misma carpeta (index.html está aquí)
   root: '.',
 
