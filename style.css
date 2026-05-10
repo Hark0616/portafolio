@@ -469,7 +469,7 @@ body.light-mode .hero-overlay {
 .sol-title { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 500; }
 .sol-summary { font-size: var(--ts-small); color: var(--text-secondary); flex: 1; line-height: 1.6; }
 .sol-stats-mini { display: flex; gap: 1.5rem; padding: 0.8rem 0; border-top: 1px solid var(--border); }
-.s-stat { font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-muted); }
+.s-stat { font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-subtle); }
 .sol-tech { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 
 /* ============================================================
@@ -491,7 +491,7 @@ body.light-mode .hero-overlay {
 .company-stats { display: flex; gap: 3.5rem; flex-wrap: wrap; }
 .stat { display: flex; flex-direction: column; gap: 0.2rem; }
 .stat-num { font-family: var(--font-heading); font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 400; color: var(--accent); }
-.stat-label { font-family: var(--font-mono); font-size: calc(var(--ts-tag) - 1px); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.stat-label { font-family: var(--font-mono); font-size: calc(var(--ts-tag) - 1px); color: var(--text-subtle); text-transform: uppercase; letter-spacing: 0.05em; }
 
 /* ============================================================
    CONTACTO
@@ -503,11 +503,11 @@ body.light-mode .hero-overlay {
   flex-direction: column;
   gap: 1.5rem;
 }
-.contact-sub { font-size: var(--ts-small); color: var(--text-muted); max-width: 380px; }
+.contact-sub { font-size: var(--ts-small); color: var(--text-subtle); max-width: 380px; }
 .btn-contact { align-self: flex-start; }
 .contact-form { display: flex; flex-direction: column; gap: 1.2rem; width: 100%; }
 .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-.form-label { font-family: var(--font-mono); font-size: var(--ts-tag); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.form-label { font-family: var(--font-mono); font-size: var(--ts-tag); color: var(--text-subtle); text-transform: uppercase; letter-spacing: 0.04em; }
 .form-input {
   background: transparent; border: none;
   border-bottom: 1px solid var(--border);
@@ -519,7 +519,7 @@ body.light-mode .hero-overlay {
 .form-input::placeholder { color: var(--text-muted); opacity: 1; }
 .form-textarea { resize: vertical; min-height: 90px; border-bottom: 1px solid var(--border); }
 .form-submit-row { display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start; margin-top: 0.4rem; }
-.form-note { font-family: var(--font-mono); font-size: var(--ts-tag); color: var(--text-muted); }
+.form-note { font-family: var(--font-mono); font-size: var(--ts-tag); color: var(--text-subtle); }
 .form-success { display: flex; align-items: center; gap: 0.8rem; padding: 1rem 1.2rem; border: 1px solid var(--accent); border-radius: var(--radius); }
 .form-success svg { width: 1.4rem; height: 1.4rem; color: var(--accent); flex: 0 0 auto; }
 .form-error { padding: 1rem; border: 1px solid #ef4444; color: #fca5a5; background: rgba(239, 68, 68, 0.06); font-size: var(--ts-small); border-radius: var(--radius); }
