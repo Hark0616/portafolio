@@ -1,5 +1,5 @@
 /* ============================================================
-   main.js — Edge.io Portfolio
+   main.js — ResetDev Portfolio
    CP-32 · CP-33 · CP-A0 · CP-A1 · CP-93
 ============================================================ */
 
@@ -112,7 +112,7 @@ const btnSubmit = document.getElementById('btn-submit');
 
 /**
  * CONFIGURACIÓN DEL FORMULARIO
- * 1) Cambia recipientEmail por el correo real de Edge.io.
+ * 1) Cambia recipientEmail por el correo real de ResetDev.
  * 2) Para activar envío directo sin backend, deja FormSubmit:
  *    https://formsubmit.co/ajax/TU_CORREO
  * 3) Si usas Formspree, reemplaza endpoint por tu URL tipo:
@@ -120,9 +120,9 @@ const btnSubmit = document.getElementById('btn-submit');
  * 4) Si publicas en Netlify, el formulario también queda marcado con data-netlify="true".
  */
 const CONTACT_CONFIG = {
-  recipientEmail: 'contacto@edge.io',
-  endpoint: 'https://formsubmit.co/ajax/contacto@edge.io',
-  subject: 'Nueva evaluación técnica - Edge.io',
+  recipientEmail: 'contacto@resetdev.com',
+  endpoint: 'https://formsubmit.co/ajax/contacto@resetdev.com',
+  subject: 'Nueva evaluación técnica - ResetDev',
 };
 
 function setFieldError(field, hasError) {
