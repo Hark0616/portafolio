@@ -215,6 +215,27 @@ body.light-mode #main-nav.scrolled {
 }
 .nav-cta-link:hover { background: var(--accent); color: var(--bg-void) !important; }
 
+.theme-switch {
+  background: none; border: none;
+  cursor: pointer; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; width: 24px; height: 24px;
+}
+body.light-mode .theme-switch { color: #1F2937; }
+body:not(.light-mode) .theme-switch { color: #F9FAFB; }
+
+.theme-switch .icon-moon,
+.theme-switch .icon-sun {
+  position: absolute;
+  transition: opacity 0.3s ease, transform 0.4s ease;
+}
+/* light mode: luna visible, sol oculto */
+body.light-mode .icon-moon  { opacity: 1; transform: rotate(0deg); }
+body.light-mode .icon-sun   { opacity: 0; transform: rotate(90deg); pointer-events: none; }
+/* dark mode: sol visible, luna oculta */
+body:not(.light-mode) .icon-moon { opacity: 0; transform: rotate(-90deg); pointer-events: none; }
+body:not(.light-mode) .icon-sun  { opacity: 1; transform: rotate(0deg); }
+
 .nav-hamburger { display: none; flex-direction: column; gap: 5px; }
 .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--text-primary); transition: transform 0.3s, opacity 0.3s; }
 
