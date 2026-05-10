@@ -14,6 +14,15 @@
   --text-primary: #111111;
   --text-secondary: #2a2a2a;
   --text-muted: #5f5f5f;
+  --bg-void: #000000;
+  --bg-surface: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --titanium: #8a8a8a;
+  --titanium-dim: #3a3a3a;
+  --text-primary: #f0f0f0;
+  --text-secondary: #9a9a9a;
+  --text-muted: #888888;
   --accent: #111111;
   --accent-dim: rgba(17, 17, 17, 0.08);
   --accent-glow: rgba(0, 0, 0, 0.18);
@@ -76,6 +85,17 @@ body.light-mode {
   --text-muted: #9f9f9f;
   --accent: #f0f0f0;
   --accent-dim: rgba(255, 255, 255, 0.08);
+  --bg-void: #ebebeb;
+  --bg-surface: #f5f5f5;
+  --bg-card: #e0e0e0;
+  --bg-card-hover: #d5d5d5;
+  --titanium: #555555;
+  --titanium-dim: #cccccc;
+  --text-primary: #1a1a1a;
+  --text-secondary: #333333;
+  --text-muted: #555555;
+  --accent: #000000;
+  --accent-dim: rgba(0, 0, 0, 0.08);
 }
 
 body.light-mode .hero-overlay {
