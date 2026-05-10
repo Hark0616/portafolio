@@ -318,6 +318,9 @@ body.light-mode .hero-overlay {
   border-radius: var(--radius);
   overflow: hidden;
 }
+.cap-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
 .cap-card {
   background: var(--bg-surface);
   padding: 2.2rem 1.8rem;
