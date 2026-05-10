@@ -242,7 +242,8 @@ body.light-mode #main-nav.scrolled {
   transform: scale(1.04);
 }
 body.light-mode .hero-bg {
-  filter: grayscale(100%) contrast(0.6) brightness(0.7) blur(2px);
+  filter: grayscale(100%) contrast(0.5) brightness(1.5) blur(2px);
+  opacity: 0.5;
 }
 
 .hero-overlay {
@@ -250,7 +251,7 @@ body.light-mode .hero-bg {
   background: linear-gradient(160deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.78) 100%);
 }
 body.light-mode .hero-overlay {
-  background: linear-gradient(160deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.65) 100%);
+  background: linear-gradient(160deg, rgba(245,245,240,0.92) 0%, rgba(245,245,240,0.78) 100%);
 }
 
 .hero-content {
@@ -264,21 +265,21 @@ body.light-mode .hero-overlay {
   font-weight: 400;
   line-height: 0.95;
   margin-bottom: 1.8rem;
-  color: #f0f0f0;
+  color: var(--text-primary);
 }
 .hero-headline-accent { color: var(--accent); }
 
 .hero-sub {
   font-size: clamp(0.9rem, 1.4vw, 1.05rem);
-  color: rgba(240,240,240,0.7);
+  color: var(--text-secondary);
   max-width: 520px;
   margin-bottom: 2.5rem;
   line-height: 1.6;
 }
 
-#hero .section-tag { color: rgba(240,240,240,0.5); }
-#hero .btn-primary { color: #f0f0f0; border-color: rgba(240,240,240,0.3); }
-#hero .btn-primary:hover { background: #f0f0f0; color: #0a0a0a; border-color: #f0f0f0; }
+#hero .section-tag { color: var(--text-muted); }
+#hero .btn-primary { color: var(--text-primary); border-color: var(--border-hover); }
+#hero .btn-primary:hover { background: var(--text-primary); color: var(--bg-void); border-color: var(--text-primary); }
 
 /* ============================================================
    SECTIONS BASE
