@@ -1,0 +1,22 @@
+{
+  "name": "resetdev-portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio de ResetDev — Ingeniería, Datos e IA",
+  "author": "ResetDev",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hark0616/portafolio.git"
+  },
+  "homepage": "https://resetdev.com"
+}
