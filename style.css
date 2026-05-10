@@ -11,6 +11,7 @@
   --text-primary: #f0f0f0;
   --text-secondary: #aaaaaa;
   --text-muted: #777777;
+  --text-subtle: #999999; /* WCAG AA-safe for small text on dark bg */
   --accent: #5eead4;
   --accent-dim: rgba(94, 234, 212, 0.08);
   --accent-hover: #2dd4bf;
@@ -46,6 +47,7 @@ body.light-mode {
   --text-primary: #1a1a1a;
   --text-secondary: #4a4a4a;
   --text-muted: #777777;
+  --text-subtle: #555555; /* WCAG AA-safe for small text on light bg */
   --accent: #1e3a5f;
   --accent-dim: rgba(30, 58, 95, 0.06);
   --accent-hover: #15304f;
@@ -115,7 +117,7 @@ select, textarea, input { font-family: var(--font-body); }
   font-size: calc(var(--ts-tag) - 1px);
   font-weight: 400;
   letter-spacing: 0.08em;
-  color: var(--text-muted);
+  color: var(--text-subtle);
   border: 1px solid var(--border);
   padding: 0.2em 0.55em;
   border-radius: 3px;
@@ -529,8 +531,8 @@ body.light-mode .hero-overlay {
 ============================================================ */
 #footer { padding: 2.5rem 0; border-top: 1px solid var(--border); background: var(--bg-void); }
 .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center; }
-.footer-tagline { font-family: var(--font-mono); font-size: var(--ts-small); color: var(--text-muted); }
-.footer-copy { font-size: var(--ts-tag); color: var(--text-muted); }
+.footer-tagline { font-family: var(--font-mono); font-size: var(--ts-small); color: var(--text-subtle); }
+.footer-copy { font-size: var(--ts-tag); color: var(--text-subtle); }
 
 /* ============================================================
    RESPONSIVE
