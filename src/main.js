@@ -233,7 +233,7 @@ function setSubmitting(isSubmitting) {
 
 function showSuccess() {
   formError?.classList.add('hidden');
-  btnSubmit.style.display = 'none';
+  // btnSubmit.style.display = 'none'; // Removed to allow multiple submissions
   formSuccess?.classList.remove('hidden');
   formSuccess?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   form.reset();
