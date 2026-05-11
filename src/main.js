@@ -120,8 +120,8 @@ const btnSubmit = document.getElementById('btn-submit');
  * 4) Si publicas en Netlify, el formulario también queda marcado con data-netlify="true".
  */
 const CONTACT_CONFIG = {
-  recipientEmail: 'contacto@resetdev.com',
-  endpoint: 'https://formsubmit.co/ajax/contacto@resetdev.com',
+  recipientEmail: 'reset.dev.solutions@gmail.com',
+  endpoint: 'https://formsubmit.co/ajax/reset.dev.solutions@gmail.com',
   subject: 'Nueva evaluación técnica - ResetDev',
 };
 
