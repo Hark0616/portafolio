@@ -57,7 +57,7 @@ if (heroContent) {
   setTimeout(() => heroContent.classList.add('visible'), 120);
 }
 
-// ── 4. MOBILE NAV: hamburger toggle
+// ── 4. MOBILE NAV: hamburger toggle //
 const hamburger = document.getElementById('nav-hamburger');
 const navLinksList = document.querySelector('.nav-links');
 
