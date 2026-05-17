@@ -3,6 +3,8 @@
  * Sin dependencias de Vercel para poder testear con Vitest.
  */
 
+import { resolveContactRecipient } from './contact-config.js';
+
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
@@ -59,6 +61,35 @@ export function buildFormSubmitUrl(recipientEmail) {
 }
 
 /**
+ * @param {string} recipientEmail
+ * @returns {string}
+ */
+export function buildFormSubmitAjaxUrl(recipientEmail) {
+  const email = String(recipientEmail || '').trim();
+  if (!email) throw new Error('FORMSUBMIT_RECIPIENT_EMAIL / CONTACT_TO_EMAIL vacío');
+  return `https://formsubmit.co/ajax/${encodeURIComponent(email)}`;
+}
+
+/**
+ * @param {object} data
+ * @returns {Record<string, string>}
+ */
+export function buildFormSubmitJson(data) {
+  const payload = {
+    nombre: data.nombre,
+    email: data.email,
+    mensaje: data.mensaje,
+    _subject: data._subject,
+    _template: 'table',
+    _captcha: 'false',
+    _replyto: data.email,
+  };
+  if (data.origen) payload.origen = data.origen;
+  if (data.fecha) payload.fecha = data.fecha;
+  return payload;
+}
+
+/**
  * @param {object} data — salida de validateContactBody.data
  * @returns {string} application/x-www-form-urlencoded
  */
@@ -72,7 +103,34 @@ export function buildFormSubmitBody(data) {
   params.set('_subject', data._subject);
   params.set('_template', 'table');
   params.set('_captcha', 'false');
+  params.set('_replyto', data.email);
   return params.toString();
+}
+
+/**
+ * @param {string} from
+ * @param {string} [fromName]
+ * @returns {string}
+ */
+export function formatResendFrom(from, fromName = 'ResetDev') {
+  const trimmed = String(from || '').trim();
+  if (!trimmed) return trimmed;
+  if (trimmed.includes('<')) return trimmed;
+  return `${fromName} <${trimmed}>`;
+}
+
+/**
+ * @param {string} [body]
+ * @returns {string}
+ */
+export function parseResendErrorBody(body) {
+  if (!body) return '';
+  try {
+    const parsed = JSON.parse(body);
+    return parsed.message || parsed.error?.message || body;
+  } catch {
+    return String(body).slice(0, 500);
+  }
 }
 
 /**
@@ -113,6 +171,35 @@ export function buildResendHtml(data) {
  * @param {{ signal?: AbortSignal }} [options]
  * @returns {Promise<{ ok: true, status: number } | { ok: false, status?: number, error?: string }>}
  */
+/**
+ * @param {string} recipient
+ * @param {object} data
+ * @param {typeof fetch} fetchImpl
+ * @param {{ signal?: AbortSignal }} [options]
+ */
+export async function sendViaFormSubmitAjax(recipient, data, fetchImpl, options = {}) {
+  const { signal } = options;
+  const url = buildFormSubmitAjaxUrl(recipient);
+  try {
+    const res = await fetchImpl(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(buildFormSubmitJson(data)),
+      signal,
+    });
+    if (res.status >= 200 && res.status < 400) {
+      return { ok: true, status: res.status, mode: 'ajax' };
+    }
+    return { ok: false, status: res.status, mode: 'ajax' };
+  } catch (e) {
+    const err = e && typeof e === 'object' && 'name' in e && e.name === 'AbortError';
+    return { ok: false, error: err ? 'timeout' : e?.message || String(e), mode: 'ajax' };
+  }
+}
+
 export async function sendViaFormSubmit(submitUrl, encodedBody, fetchImpl, options = {}) {
   const { signal } = options;
   try {
@@ -137,7 +224,15 @@ export async function sendViaFormSubmit(submitUrl, encodedBody, fetchImpl, optio
  * @param {typeof fetch} fetchImpl
  */
 export async function sendViaResend(params, fetchImpl) {
-  const { apiKey, from, to, subject, html } = params;
+  const { apiKey, from, to, subject, html, replyTo } = params;
+  const payload = {
+    from: formatResendFrom(from),
+    to: [to],
+    subject,
+    html,
+  };
+  if (replyTo) payload.reply_to = replyTo;
+
   try {
     const res = await fetchImpl('https://api.resend.com/emails', {
       method: 'POST',
@@ -145,18 +240,18 @@ export async function sendViaResend(params, fetchImpl) {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${apiKey}`,
       },
-      body: JSON.stringify({
-        from,
-        to: [to],
-        subject,
-        html,
-      }),
+      body: JSON.stringify(payload),
     });
     if (res.ok) {
       return { ok: true, status: res.status };
     }
     const body = await res.text();
-    return { ok: false, status: res.status, body };
+    return {
+      ok: false,
+      status: res.status,
+      body,
+      message: parseResendErrorBody(body),
+    };
   } catch (e) {
     return { ok: false, error: e?.message || String(e) };
   }
@@ -172,63 +267,55 @@ export async function tryFormSubmitThenResend(env, validatedData, deps = {}) {
   const fetchImpl = deps.fetch ?? globalThis.fetch;
   const formSubmitTimeoutMs = deps.formSubmitTimeoutMs ?? 12_000;
 
-  const recipient = (env.FORMSUBMIT_RECIPIENT_EMAIL || env.CONTACT_TO_EMAIL || '').trim();
+  const recipient = resolveContactRecipient(env);
   if (!recipient) {
     return {
       ok: false,
       code: 'CONFIG',
-      formSubmit: { ok: false, error: 'Falta CONTACT_TO_EMAIL o FORMSUBMIT_RECIPIENT_EMAIL' },
+      formSubmit: { ok: false, error: 'No hay buzón de destino configurado' },
     };
   }
 
-  const submitUrl = buildFormSubmitUrl(recipient);
-  const encodedBody = buildFormSubmitBody(validatedData);
+  const apiKey = env.RESEND_API_KEY?.trim();
+  const from = env.RESEND_FROM_EMAIL?.trim();
+  const to = (env.CONTACT_TO_EMAIL || recipient).trim();
+  const subject = validatedData._subject || 'Contacto ResetDev';
+  const html = buildResendHtml(validatedData);
+
+  let resendResult = { ok: false, skipped: true, reason: 'RESEND no configurado' };
+
+  if (apiKey && from) {
+    resendResult = await sendViaResend(
+      { apiKey, from, to, subject, html, replyTo: validatedData.email },
+      fetchImpl
+    );
+    if (resendResult.ok) {
+      return { ok: true, channel: 'resend' };
+    }
+  }
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), formSubmitTimeoutMs);
 
   let formSubmitResult;
   try {
-    formSubmitResult = await sendViaFormSubmit(submitUrl, encodedBody, fetchImpl, {
+    formSubmitResult = await sendViaFormSubmitAjax(recipient, validatedData, fetchImpl, {
       signal: controller.signal,
     });
+    if (!formSubmitResult.ok) {
+      const submitUrl = buildFormSubmitUrl(recipient);
+      const encodedBody = buildFormSubmitBody(validatedData);
+      const classic = await sendViaFormSubmit(submitUrl, encodedBody, fetchImpl, {
+        signal: controller.signal,
+      });
+      formSubmitResult = { ...classic, mode: 'form' };
+    }
   } finally {
     clearTimeout(timer);
   }
 
   if (formSubmitResult.ok) {
     return { ok: true, channel: 'formsubmit' };
-  }
-
-  const apiKey = env.RESEND_API_KEY?.trim();
-  const from = env.RESEND_FROM_EMAIL?.trim();
-  const to = (env.CONTACT_TO_EMAIL || recipient).trim();
-
-  if (!apiKey || !from) {
-    return {
-      ok: false,
-      code: 'BOTH_FAILED',
-      formSubmit: formSubmitResult,
-      resend: { ok: false, skipped: true, reason: 'RESEND_API_KEY o RESEND_FROM_EMAIL no configurados' },
-    };
-  }
-
-  const subject = validatedData._subject || 'Contacto ResetDev';
-  const html = buildResendHtml(validatedData);
-
-  const resendResult = await sendViaResend(
-    {
-      apiKey,
-      from,
-      to,
-      subject,
-      html,
-    },
-    fetchImpl
-  );
-
-  if (resendResult.ok) {
-    return { ok: true, channel: 'resend' };
   }
 
   return {

@@ -116,9 +116,16 @@ const btnSubmit = document.getElementById('btn-submit');
  * Variables: ver .env.example y el dashboard de Vercel.
  */
 const CONTACT_CONFIG = {
-  recipientEmail: 'reset.dev.solutions@gmail.com',
   apiPath: '/api/contact',
   subject: 'Nueva evaluación técnica - ResetDev',
+};
+
+const CONTACT_ERROR_MESSAGES = {
+  VALIDATION: 'Revise los campos marcados e intente de nuevo.',
+  CONFIG: 'El formulario no está disponible temporalmente. Escríbanos a reset.dev.solutions@gmail.com.',
+  BOTH_FAILED: 'No pudimos enviar su mensaje ahora. Intente de nuevo en unos minutos.',
+  INVALID_JSON: 'Respuesta inválida del servidor. Intente de nuevo.',
+  default: 'No se pudo enviar el mensaje. Intente de nuevo en unos minutos.',
 };
 
 function setFieldError(field, hasError) {
@@ -162,20 +169,6 @@ function buildPayload() {
   };
 }
 
-function buildMailto(payload) {
-  const body = [
-    `Nombre: ${payload.nombre || ''}`,
-    `Correo: ${payload.email || ''}`,
-    '',
-    'Mensaje:',
-    payload.mensaje || '',
-    '',
-    `Origen: ${payload.origen || window.location.href}`,
-  ].join('\n');
-
-  return `mailto:${CONTACT_CONFIG.recipientEmail}?subject=${encodeURIComponent(CONTACT_CONFIG.subject)}&body=${encodeURIComponent(body)}`;
-}
-
 async function sendContactApi(payload) {
   const response = await fetch(CONTACT_CONFIG.apiPath, {
     method: 'POST',
@@ -217,10 +210,15 @@ function showSuccess() {
   form.reset();
 }
 
-function showMailFallback(payload) {
+function showError(code) {
   formSuccess?.classList.add('hidden');
-  formError?.classList.remove('hidden');
-  window.location.href = buildMailto(payload);
+  if (!formError) return;
+  const message =
+    CONTACT_ERROR_MESSAGES[code] || CONTACT_ERROR_MESSAGES.default;
+  const textEl = formError.querySelector('[data-error-text]');
+  if (textEl) textEl.textContent = message;
+  formError.classList.remove('hidden');
+  formError.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 form?.addEventListener('submit', async (e) => {
@@ -241,8 +239,9 @@ form?.addEventListener('submit', async (e) => {
   try {
     await sendContactApi(payload);
     showSuccess();
-  } catch {
-    showMailFallback(payload);
+  } catch (err) {
+    const code = err instanceof Error ? err.message : 'UNKNOWN';
+    showError(code);
   } finally {
     setSubmitting(false);
   }

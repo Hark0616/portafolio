@@ -350,7 +350,7 @@
         <h2 class="section-title">¿Tiene un problema tecnico<br />que no ha podido resolver?</h2>
         <p class="contact-sub">Cuentenos el problema. Respondemos en menos de 48 horas.</p>
 
-        <form action="https://formsubmit.co/reset.dev.solutions@gmail.com" method="POST" class="contact-form" id="contact-form">
+        <form action="#" method="post" class="contact-form" id="contact-form" novalidate>
           <input type="hidden" name="_subject" value="Nueva consulta - ResetDev" />
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_template" value="table" />
@@ -387,8 +387,8 @@
         <div id="form-success" class="hidden" style="margin-top: 1rem; color: green; font-weight: 500;">
           ¡Mensaje enviado exitosamente! Puede enviar otro mensaje si lo necesita.
         </div>
-        <div id="form-error" class="hidden" style="margin-top: 1rem; color: red; font-weight: 500;">
-          Error al enviar el mensaje. Intente nuevamente o use el enlace alternativo.
+        <div id="form-error" class="form-error hidden" role="alert">
+          <p data-error-text>No se pudo enviar el mensaje. Intente de nuevo en unos minutos.</p>
         </div>
 
       </div>

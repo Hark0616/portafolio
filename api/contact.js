@@ -1,4 +1,25 @@
-import { validateContactBody, tryFormSubmitThenResend } from './lib/contact-handlers.js';
+import {
+  validateContactBody,
+  tryFormSubmitThenResend,
+  parseResendErrorBody,
+} from './lib/contact-handlers.js';
+
+/** @param {{ code?: string, resend?: object, formSubmit?: object }} result */
+function logContactFailure(result) {
+  const resendMsg =
+    result.resend?.message ||
+    parseResendErrorBody(result.resend?.body) ||
+    result.resend?.reason ||
+    result.resend?.error;
+  console.error('[api/contact] envío fallido', {
+    code: result.code,
+    resendStatus: result.resend?.status,
+    resendMessage: resendMsg,
+    formSubmitStatus: result.formSubmit?.status,
+    formSubmitMode: result.formSubmit?.mode,
+    formSubmitError: result.formSubmit?.error,
+  });
+}
 
 /**
  * Lee y parsea el cuerpo JSON de un IncomingMessage (Vercel Node).
@@ -74,6 +95,8 @@ export default async function handler(req, res) {
     res.statusCode = 500;
     return res.end(JSON.stringify({ ok: false, code: result.code }));
   }
+
+  logContactFailure(result);
 
   res.statusCode = 502;
   return res.end(JSON.stringify({ ok: false, code: result.code || 'BOTH_FAILED' }));

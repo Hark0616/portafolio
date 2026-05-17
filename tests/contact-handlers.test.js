@@ -214,13 +214,8 @@ describe('tryFormSubmitThenResend', () => {
     expect(fetchImpl).toHaveBeenCalledTimes(1);
   });
 
-  it('usa Resend si FormSubmit falla', async () => {
-    let call = 0;
+  it('prioriza Resend cuando está configurado', async () => {
     const fetchImpl = vi.fn().mockImplementation((url) => {
-      call += 1;
-      if (url.includes('formsubmit.co')) {
-        return Promise.resolve({ status: 521, ok: false });
-      }
       if (url.includes('resend.com')) {
         return Promise.resolve({ ok: true, status: 200, text: async () => '{}' });
       }
@@ -235,6 +230,27 @@ describe('tryFormSubmitThenResend', () => {
     const r = await tryFormSubmitThenResend(env, baseData, { fetch: fetchImpl });
     expect(r.ok).toBe(true);
     expect(r.channel).toBe('resend');
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
+  });
+
+  it('usa FormSubmit si Resend falla', async () => {
+    const fetchImpl = vi.fn().mockImplementation((url) => {
+      if (url.includes('resend.com')) {
+        return Promise.resolve({ ok: false, status: 500, text: async () => 'err' });
+      }
+      if (url.includes('formsubmit.co')) {
+        return Promise.resolve({ status: 200, ok: true });
+      }
+      return Promise.reject(new Error('unexpected'));
+    });
+    const env = {
+      FORMSUBMIT_RECIPIENT_EMAIL: 'dest@mail.com',
+      RESEND_API_KEY: 're_xxx',
+      RESEND_FROM_EMAIL: 'onboarding@resend.dev',
+    };
+    const r = await tryFormSubmitThenResend(env, baseData, { fetch: fetchImpl });
+    expect(r.ok).toBe(true);
+    expect(r.channel).toBe('formsubmit');
     expect(fetchImpl).toHaveBeenCalledTimes(2);
   });
 
@@ -264,11 +280,14 @@ describe('tryFormSubmitThenResend', () => {
     expect(r.resend?.skipped).toBe(true);
   });
 
-  it('CONFIG si falta email destino FormSubmit', async () => {
-    const fetchImpl = vi.fn();
+  it('usa email por defecto si no hay variables de entorno', async () => {
+    const fetchImpl = vi.fn().mockResolvedValue({ status: 200, ok: true });
     const r = await tryFormSubmitThenResend({}, baseData, { fetch: fetchImpl });
-    expect(r.ok).toBe(false);
-    expect(r.code).toBe('CONFIG');
-    expect(fetchImpl).not.toHaveBeenCalled();
+    expect(r.ok).toBe(true);
+    expect(r.channel).toBe('formsubmit');
+    expect(fetchImpl).toHaveBeenCalledWith(
+      'https://formsubmit.co/ajax/reset.dev.solutions%40gmail.com',
+      expect.objectContaining({ method: 'POST' })
+    );
   });
 });
