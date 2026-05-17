@@ -112,16 +112,12 @@ const btnSubmit = document.getElementById('btn-submit');
 
 /**
  * CONFIGURACIÓN DEL FORMULARIO
- * 1) Cambia recipientEmail por el correo real de ResetDev.
- * 2) Para activar envío directo sin backend, deja FormSubmit:
- *    https://formsubmit.co/ajax/TU_CORREO
- * 3) Si usas Formspree, reemplaza endpoint por tu URL tipo:
- *    https://formspree.io/f/xxxxxxx
- * 4) Si publicas en Netlify, el formulario también queda marcado con data-netlify="true".
+ * El envío va a /api/contact (Vercel): FormSubmit desde servidor y Resend si falla.
+ * Variables: ver .env.example y el dashboard de Vercel.
  */
 const CONTACT_CONFIG = {
   recipientEmail: 'reset.dev.solutions@gmail.com',
-  endpoint: 'https://formsubmit.co/ajax/reset.dev.solutions@gmail.com',
+  apiPath: '/api/contact',
   subject: 'Nueva evaluación técnica - ResetDev',
 };
 
@@ -169,17 +165,10 @@ function buildPayload() {
 function buildMailto(payload) {
   const body = [
     `Nombre: ${payload.nombre || ''}`,
-    `Empresa: ${payload.empresa || ''}`,
     `Correo: ${payload.email || ''}`,
-    `Sector: ${payload.sector || 'No especificado'}`,
-    `Horizonte: ${payload.timeline || 'No especificado'}`,
-    `Presupuesto: ${payload.presupuesto || 'No especificado'}`,
     '',
-    'Infraestructura actual:',
-    payload.infraestructura || '',
-    '',
-    'Problema o cuello de botella:',
-    payload.problema || '',
+    'Mensaje:',
+    payload.mensaje || '',
     '',
     `Origen: ${payload.origen || window.location.href}`,
   ].join('\n');
@@ -187,10 +176,8 @@ function buildMailto(payload) {
   return `mailto:${CONTACT_CONFIG.recipientEmail}?subject=${encodeURIComponent(CONTACT_CONFIG.subject)}&body=${encodeURIComponent(body)}`;
 }
 
-async function sendWithEndpoint(payload) {
-  if (!CONTACT_CONFIG.endpoint) return false;
-
-  const response = await fetch(CONTACT_CONFIG.endpoint, {
+async function sendContactApi(payload) {
+  const response = await fetch(CONTACT_CONFIG.apiPath, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -199,28 +186,19 @@ async function sendWithEndpoint(payload) {
     body: JSON.stringify(payload),
   });
 
-  if (!response.ok) {
-    throw new Error(`Endpoint error: ${response.status}`);
+  let data;
+  try {
+    data = await response.json();
+  } catch {
+    throw new Error('INVALID_JSON');
   }
 
-  return true;
-}
-
-async function sendWithNetlify(payload) {
-  if (!form.hasAttribute('data-netlify')) return false;
-
-  const body = new URLSearchParams(payload).toString();
-  const response = await fetch('/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body,
-  });
-
-  if (!response.ok) {
-    throw new Error(`Netlify Forms error: ${response.status}`);
+  if (!response.ok || !data.ok) {
+    const code = data?.code || response.status;
+    throw new Error(String(code));
   }
 
-  return true;
+  return data;
 }
 
 function setSubmitting(isSubmitting) {
@@ -261,15 +239,10 @@ form?.addEventListener('submit', async (e) => {
   setSubmitting(true);
 
   try {
-    await sendWithEndpoint(payload);
+    await sendContactApi(payload);
     showSuccess();
-  } catch (endpointError) {
-    try {
-      await sendWithNetlify(payload);
-      showSuccess();
-    } catch (netlifyError) {
-      showMailFallback(payload);
-    }
+  } catch {
+    showMailFallback(payload);
   } finally {
     setSubmitting(false);
   }
